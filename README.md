@@ -27,12 +27,12 @@ Lưu ý: mở thẳng `index.html` bằng `file://` sẽ KHÔNG load được CS
 - Responsive + accessible (focus, reduced-motion, skip-link)
 
 ## Liên hệ tích hợp
-- Cụm nút nổi góc phải dưới: Zalo OA (zalo.me/0909123456) + Messenger (m.me/Megiay.shop94)
-- Footer: địa chỉ (link Google Maps), Facebook (fb.com/Megiay.shop94), Messenger, Zalo OA, giờ mở cửa
+- Cụm nút nổi góc phải dưới: Zalo (zalo.me/0775996797) + Messenger (m.me/Megiay.shop94)
+- Footer: SĐT 0775 996 797, địa chỉ 458 Nguyễn Duy Trinh P. Bình Trưng (link Google Maps),
+  Facebook (fb.com/Megiay.shop94), Messenger, Zalo, giờ mở cửa
 
 ## Trước khi lên production
 - Domain placeholder hiện là megiay.vn — nếu domain thật khác, sửa trong index.html, robots.txt, sitemap.xml
-- Đổi `zalo.me/0909123456` thành link Zalo OA thật (zalo.me/<OA-ID> hoặc SĐT đăng ký Zalo)
-- Thay số điện thoại, địa chỉ, tọa độ trong JSON-LD + footer
+- Nếu có Zalo OA chính thức, đổi `zalo.me/0775996797` thành zalo.me/<OA-ID>
 - Nối form đặt lịch vào backend/CRM thật
 - Thay ảnh giày thật vào khối before/after (hiện đang là placeholder CSS)
