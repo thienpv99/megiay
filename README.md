@@ -28,7 +28,7 @@ Lưu ý: mở thẳng `index.html` bằng `file://` sẽ KHÔNG load được CS
 
 ## Liên hệ tích hợp
 - Cụm nút nổi góc phải dưới: Zalo (zalo.me/0775996797) + Messenger (m.me/Megiay.shop94)
-- Footer: SĐT 0775 996 797, địa chỉ 458 Nguyễn Duy Trinh P. Bình Trưng (link Google Maps),
+- Footer: SĐT 0775 996 797, địa chỉ 568 Nguyễn Duy Trinh P. Bình Trưng (link Google Maps),
   Facebook (fb.com/Megiay.shop94), Messenger, Zalo, giờ mở cửa
 
 ## Trước khi lên production
