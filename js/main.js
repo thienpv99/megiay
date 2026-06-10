@@ -5,8 +5,8 @@
   const handle = document.getElementById('baHandle');
   if(!range) return;
   function update(v){
-    before.style.width = v + '%';
-    handle.style.left  = v + '%';
+    before.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+    handle.style.left = v + '%';
   }
   range.addEventListener('input', e => update(e.target.value));
   update(range.value);
