@@ -27,12 +27,13 @@ Lưu ý: mở thẳng `index.html` bằng `file://` sẽ KHÔNG load được CS
 - Responsive + accessible (focus, reduced-motion, skip-link)
 
 ## Liên hệ tích hợp
-- Nút Messenger nổi (góc phải dưới) → https://m.me/megiay
-- Footer: địa chỉ (link Google Maps), Facebook, Messenger, giờ mở cửa
+- Cụm nút nổi góc phải dưới: Zalo OA (zalo.me/0909123456) + Messenger (m.me/megiay)
+- Footer: địa chỉ (link Google Maps), Facebook, Messenger, Zalo OA, giờ mở cửa
 
 ## Trước khi lên production
 - Đổi domain sneakercare.vn → domain thật trong index.html, robots.txt, sitemap.xml
 - Đổi `megiay` trong link facebook.com/megiay và m.me/megiay thành username Fanpage thật
+- Đổi `zalo.me/0909123456` thành link Zalo OA thật (zalo.me/<OA-ID> hoặc SĐT đăng ký Zalo)
 - Thay số điện thoại, địa chỉ, tọa độ trong JSON-LD + footer
 - Nối form đặt lịch vào backend/CRM thật
 - Thay ảnh giày thật vào khối before/after (hiện đang là placeholder CSS)

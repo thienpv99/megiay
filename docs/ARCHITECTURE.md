@@ -22,7 +22,7 @@ megiay/
 - **JS**: mỗi tính năng là 1 IIFE độc lập, tự thoát nếu thiếu DOM element (`if(!x) return`).
   Trang vẫn hoạt động đầy đủ khi JS lỗi/tắt (progressive enhancement).
 - **Liên hệ/thông tin doanh nghiệp** xuất hiện ở 3 nơi phải sửa đồng bộ:
-  JSON-LD (head), footer, nút Messenger nổi. Tìm theo từ khóa `megiay` / `0909`.
+  JSON-LD (head), footer, cụm nút nổi (Zalo + Messenger). Tìm theo từ khóa `megiay` / `0909`.
 
 ## Quyết định kiến trúc (ADR-lite)
 
