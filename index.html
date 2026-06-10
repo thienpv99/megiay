@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="assets/css/style.css">
 
 <!-- Structured Data: LocalBusiness -->
 <script type="application/ld+json">
@@ -52,6 +52,8 @@
     "addressCountry": "VN"
   },
   "geo": { "@type": "GeoCoordinates", "latitude": 10.762622, "longitude": 106.660172 },
+  "hasMap": "https://www.google.com/maps?q=10.762622,106.660172",
+  "sameAs": ["https://www.facebook.com/megiay"],
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
@@ -330,13 +332,23 @@
     <div>
       <h4>Liên hệ</h4>
       <a href="tel:+84909123456">0909 123 456</a>
-      <a href="#">123 Nguyễn Văn Cừ, Q.5, TP.HCM</a>
-      <a href="#">08:00 – 21:00 mỗi ngày</a>
+      <a href="https://www.google.com/maps?q=10.762622,106.660172" target="_blank" rel="noopener">123 Nguyễn Văn Cừ, Q.5, TP.HCM</a>
+      <a href="https://www.facebook.com/megiay" target="_blank" rel="noopener">Facebook: fb.com/megiay</a>
+      <a href="https://m.me/megiay" target="_blank" rel="noopener">Chat Messenger</a>
+      <span class="foot__hours">08:00 – 21:00 mỗi ngày</span>
     </div>
   </div>
   <div class="wrap foot__bar"><p>© 2026 SneakerCare. Mọi quyền được bảo lưu.</p></div>
 </footer>
 
-<script src="js/main.js"></script>
+<!-- Floating Messenger contact -->
+<a href="https://m.me/megiay" class="msgr" target="_blank" rel="noopener" aria-label="Chat với chúng tôi qua Facebook Messenger">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true">
+    <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.35.27.57l.05 1.78c.02.57.6.94 1.12.71l1.98-.87c.17-.08.36-.09.53-.04.91.25 1.88.38 2.91.38 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm6 7.46-2.94 4.66c-.47.74-1.47.93-2.17.4l-2.34-1.75a.6.6 0 0 0-.72 0l-3.16 2.4c-.42.32-.97-.18-.69-.63l2.94-4.66c.47-.74 1.47-.93 2.17-.4l2.34 1.75c.21.16.51.16.72 0l3.16-2.4c.42-.32.97.18.69.63z"/>
+  </svg>
+  <span>Chat với shop</span>
+</a>
+
+<script src="assets/js/main.js"></script>
 </body>
 </html>

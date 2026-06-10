@@ -1,31 +1,38 @@
-# SneakerCare — Trang vệ sinh giày (SEO landing page)
+# SneakerCare / Megiay — Trang vệ sinh giày (SEO landing page)
 
 ## Chạy local
 Mở terminal tại thư mục này rồi chạy MỘT trong các lệnh:
 
-    python3 -m http.server 8080
-    # hoặc:  npx serve .
+    npx serve .
+    # hoặc:  python3 -m http.server 8080
 
-Sau đó mở trình duyệt: http://localhost:8080
-
-Hoặc đơn giản: mở thẳng file `index.html` bằng trình duyệt.
+Sau đó mở trình duyệt: http://localhost:8080 (hoặc cổng serve in ra).
+Lưu ý: mở thẳng `index.html` bằng `file://` sẽ KHÔNG load được CSS — luôn chạy qua server.
 
 ## Cấu trúc
-- index.html      Trang chính (1 page, full SEO)
-- css/style.css   Giao diện
-- js/main.js      Slider trước/sau + form đặt lịch
-- robots.txt      Cho bot tìm kiếm
-- sitemap.xml     Sơ đồ site
+- index.html              Trang chính (1 page, full SEO)
+- assets/css/style.css    Giao diện
+- assets/js/main.js       Slider trước/sau + form đặt lịch + nav shadow
+- assets/logo/            Logo Megiay (SVG)
+- favicon-32.png / favicon-180.png   Favicon (đặt ở root theo chuẩn)
+- robots.txt              Cho bot tìm kiếm
+- sitemap.xml             Sơ đồ site
+- docs/ARCHITECTURE.md    Ghi chú kiến trúc & roadmap
 
 ## SEO đã tích hợp
-- Thẻ title / meta description / keywords tối ưu từ khóa "vệ sinh giày"
+- Title / meta description / keywords tối ưu từ khóa "vệ sinh giày"
 - Open Graph + Twitter Card (chia sẻ mạng xã hội)
-- Schema.org JSON-LD: LocalBusiness, Service + bảng giá, FAQPage
+- Schema.org JSON-LD: LocalBusiness (kèm sameAs Facebook, hasMap), Service + bảng giá, FAQPage
 - robots.txt + sitemap.xml, canonical, lang="vi", semantic HTML, alt/aria
 - Responsive + accessible (focus, reduced-motion, skip-link)
 
+## Liên hệ tích hợp
+- Nút Messenger nổi (góc phải dưới) → https://m.me/megiay
+- Footer: địa chỉ (link Google Maps), Facebook, Messenger, giờ mở cửa
+
 ## Trước khi lên production
 - Đổi domain sneakercare.vn → domain thật trong index.html, robots.txt, sitemap.xml
-- Thay số điện thoại, địa chỉ, tọa độ trong JSON-LD
+- Đổi `megiay` trong link facebook.com/megiay và m.me/megiay thành username Fanpage thật
+- Thay số điện thoại, địa chỉ, tọa độ trong JSON-LD + footer
 - Nối form đặt lịch vào backend/CRM thật
 - Thay ảnh giày thật vào khối before/after (hiện đang là placeholder CSS)
