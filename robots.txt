@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://sneakercare.vn/sitemap.xml
+Sitemap: https://megiay.vn/sitemap.xml

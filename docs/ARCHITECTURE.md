@@ -34,9 +34,10 @@ Lý do: 1 trang, nội dung ít thay đổi, SEO cần HTML render sẵn, GitHub
 Lý do: Chat Plugin cho khách vãng lai đã bị Meta ngừng hỗ trợ (2024);
 link m.me không cần SDK, không chậm trang, không vấn đề cookie/consent.
 
-**ADR-3: Brand "SneakerCare" (nội dung) vs "Megiay" (logo/repo) đang lệch nhau.**
-Trạng thái: CHƯA xử lý — cần chủ shop quyết định tên chính thức rồi đổi đồng loạt:
-title, meta, OG, JSON-LD `name`, footer copyright.
+**ADR-3: Thống nhất brand "Megiay" toàn site.**
+Trạng thái: ĐÃ xử lý (2026-06-10) — đổi toàn bộ "SneakerCare" → "Megiay" và domain
+placeholder sneakercare.vn → megiay.vn trong title, meta, OG, JSON-LD, footer,
+robots.txt, sitemap.xml.
 
 ## Roadmap phát triển
 

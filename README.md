@@ -1,4 +1,4 @@
-# SneakerCare / Megiay — Trang vệ sinh giày (SEO landing page)
+# Megiay — Trang vệ sinh giày (SEO landing page)
 
 ## Chạy local
 Mở terminal tại thư mục này rồi chạy MỘT trong các lệnh:
@@ -31,7 +31,7 @@ Lưu ý: mở thẳng `index.html` bằng `file://` sẽ KHÔNG load được CS
 - Footer: địa chỉ (link Google Maps), Facebook, Messenger, Zalo OA, giờ mở cửa
 
 ## Trước khi lên production
-- Đổi domain sneakercare.vn → domain thật trong index.html, robots.txt, sitemap.xml
+- Domain placeholder hiện là megiay.vn — nếu domain thật khác, sửa trong index.html, robots.txt, sitemap.xml
 - Đổi `megiay` trong link facebook.com/megiay và m.me/megiay thành username Fanpage thật
 - Đổi `zalo.me/0909123456` thành link Zalo OA thật (zalo.me/<OA-ID> hoặc SĐT đăng ký Zalo)
 - Thay số điện thoại, địa chỉ, tọa độ trong JSON-LD + footer
