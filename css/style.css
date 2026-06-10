@@ -42,7 +42,7 @@ a{color:inherit;text-decoration:none}
 .nav{position:sticky;top:0;z-index:100;background:rgba(246,243,236,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav__inner{display:flex;align-items:center;gap:28px;height:72px}
 .brand{font-family:"Fraunces",serif;font-weight:700;font-size:1.35rem;display:flex;align-items:center;gap:.4em}
-.brand__mark{color:var(--foam);font-size:1.1em;transform:rotate(-20deg);display:inline-block}
+.brand__logo{height:34px;width:auto;display:block}
 .nav__links{display:flex;gap:26px;margin-left:auto;font-weight:500;font-size:.96rem}
 .nav__links a{position:relative;padding:4px 0}
 .nav__links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--foam);transition:width .25s}
