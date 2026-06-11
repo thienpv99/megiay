@@ -26,6 +26,10 @@ Lưu ý: mở thẳng `index.html` bằng `file://` sẽ KHÔNG load được CS
 - robots.txt + sitemap.xml, canonical, lang="vi", semantic HTML, alt/aria
 - Responsive + accessible (focus, reduced-motion, skip-link)
 
+## Analytics
+- GA4 (Measurement ID: G-E467NPGTGD) gắn trong <head>
+- Sự kiện tùy chỉnh: `contact_click` (method: phone/zalo/messenger/facebook), `generate_lead` (gửi form, kèm gói dịch vụ)
+
 ## Liên hệ tích hợp
 - Cụm nút nổi góc phải dưới: Zalo (zalo.me/0775996797) + Messenger (m.me/Megiay.shop94)
 - Footer: SĐT 0775 996 797, địa chỉ 568 Nguyễn Duy Trinh P. Bình Trưng (link Google Maps),

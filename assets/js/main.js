@@ -28,7 +28,22 @@
     }
     msg.textContent = 'Đã nhận yêu cầu! Shipper sẽ gọi cho bạn trong ít phút.';
     msg.style.color = '';
+    if(typeof gtag === 'function') gtag('event', 'generate_lead', {service: form.service.value});
     form.reset();
+  });
+})();
+
+// GA4: track contact channel clicks
+(function(){
+  if(typeof gtag !== 'function') return;
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if(!a) return;
+    const href = a.getAttribute('href') || '';
+    if(href.startsWith('tel:'))            gtag('event', 'contact_click', {method: 'phone'});
+    else if(href.includes('zalo.me'))      gtag('event', 'contact_click', {method: 'zalo'});
+    else if(href.includes('m.me'))         gtag('event', 'contact_click', {method: 'messenger'});
+    else if(href.includes('facebook.com')) gtag('event', 'contact_click', {method: 'facebook'});
   });
 })();
 
