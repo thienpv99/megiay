@@ -41,9 +41,9 @@ async function callClaude(topic) {
   const system =
     'Bạn là biên tập viên SEO cho Megiay — dịch vụ vệ sinh giày cao cấp tại TP.HCM. ' +
     'Viết bài chuẩn SEO tiếng Việt, giọng thân thiện, chuyên nghiệp, thực chiến. ' +
-    'Chỉ trả về JSON hợp lệ, không kèm giải thích, không dùng markdown code fence.';
+    'Luôn nộp bài bằng cách gọi tool submit_article.';
   const prompt =
-`Viết một bài blog SEO về chủ đề sau cho website vệ sinh giày Megiay.
+`Viết một bài blog SEO về chủ đề sau cho website vệ sinh giày Megiay, rồi gọi tool submit_article để nộp bài.
 
 Chủ đề: ${topic.title}
 Từ khóa chính: ${topic.keywords}
@@ -51,20 +51,27 @@ Góc tiếp cận: ${topic.angle}
 
 Yêu cầu:
 - Độ dài 700–1100 từ, chia mục rõ ràng bằng thẻ <h2> (và <h3> nếu cần).
-- Nội dung trong "bodyHtml" chỉ gồm các thẻ: <h2> <h3> <p> <ul> <ol> <li> <strong> <blockquote>. KHÔNG dùng <h1>, không thẻ <html>/<head>/<body>, không style inline.
+- bodyHtml chỉ gồm các thẻ: <h2> <h3> <p> <ul> <ol> <li> <strong> <blockquote>. KHÔNG dùng <h1>, không thẻ <html>/<head>/<body>, không style inline.
 - Chèn từ khóa tự nhiên, không nhồi nhét. Có ít nhất 1 danh sách (ul hoặc ol).
-- Có phần nhắc khéo dịch vụ Megiay ở gần cuối (nhận giao tận nơi, cam kết sạch như mới hoặc hoàn tiền), nhưng KHÔNG chèn thẻ CTA — hệ thống tự thêm.
+- Có phần nhắc khéo dịch vụ Megiay ở gần cuối (nhận giao tận nơi, cam kết sạch như mới hoặc hoàn tiền), nhưng KHÔNG chèn thẻ CTA — hệ thống tự thêm.`;
 
-Trả về DUY NHẤT một object JSON với các trường:
-{
-  "title": "tiêu đề bài (<= 65 ký tự nếu được)",
-  "description": "meta description 140-160 ký tự",
-  "keywords": "5-8 từ khóa phân tách bằng dấu phẩy",
-  "lede": "đoạn mở đầu 1-2 câu tóm tắt hấp dẫn",
-  "excerpt": "tóm tắt ngắn ~20 từ cho thẻ card ngoài trang blog",
-  "readMinutes": số phút đọc ước lượng (số nguyên),
-  "bodyHtml": "toàn bộ phần thân bài dưới dạng HTML"
-}`;
+  const tool = {
+    name: 'submit_article',
+    description: 'Nộp bài blog SEO đã viết xong.',
+    input_schema: {
+      type: 'object',
+      properties: {
+        title: { type: 'string', description: 'Tiêu đề bài, nên <= 65 ký tự' },
+        description: { type: 'string', description: 'Meta description 140-160 ký tự' },
+        keywords: { type: 'string', description: '5-8 từ khóa, phân tách bằng dấu phẩy' },
+        lede: { type: 'string', description: 'Đoạn mở đầu 1-2 câu hấp dẫn' },
+        excerpt: { type: 'string', description: 'Tóm tắt ~20 từ cho thẻ card' },
+        readMinutes: { type: 'integer', description: 'Số phút đọc ước lượng' },
+        bodyHtml: { type: 'string', description: 'Toàn bộ thân bài dưới dạng HTML' },
+      },
+      required: ['title', 'description', 'keywords', 'lede', 'excerpt', 'readMinutes', 'bodyHtml'],
+    },
+  };
 
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -77,16 +84,17 @@ Trả về DUY NHẤT một object JSON với các trường:
       model: MODEL,
       max_tokens: 4000,
       system,
+      tools: [tool],
+      tool_choice: { type: 'tool', name: 'submit_article' },
       messages: [{ role: 'user', content: prompt }],
     }),
   });
   if (!res.ok) throw new Error(`Anthropic API ${res.status}: ${await res.text()}`);
   const data = await res.json();
-  const text = (data.content || []).map((b) => b.text || '').join('');
-  const start = text.indexOf('{');
-  const end = text.lastIndexOf('}');
-  if (start === -1 || end === -1) throw new Error(`No JSON in model output:\n${text}`);
-  return JSON.parse(text.slice(start, end + 1));
+  // Với tool_use, Anthropic đã bảo đảm input là JSON hợp lệ — không cần tự parse chuỗi.
+  const block = (data.content || []).find((b) => b.type === 'tool_use');
+  if (!block) throw new Error(`No tool_use in response: ${JSON.stringify(data).slice(0, 800)}`);
+  return block.input;
 }
 
 async function sendTelegram(draft) {
