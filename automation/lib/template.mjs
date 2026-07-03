@@ -39,6 +39,7 @@ const SITE = 'https://megiay.vn';
  */
 export function renderArticlePage(d) {
   const url = `${SITE}/blog/${d.slug}/`;
+  const ogImage = d.heroImage || `${SITE}/images/og-cover.jpg`;
   const articleLd = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -49,7 +50,7 @@ export function renderArticlePage(d) {
     author: { '@type': 'Organization', name: 'Megiay' },
     publisher: { '@type': 'Organization', name: 'Megiay', url: `${SITE}/` },
     mainEntityOfPage: url,
-    image: `${SITE}/images/og-cover.jpg`,
+    image: ogImage,
   }, null, 2);
   const crumbLd = JSON.stringify({
     '@context': 'https://schema.org',
@@ -91,7 +92,7 @@ export function renderArticlePage(d) {
 <meta property="og:title" content="${attr(d.title)}">
 <meta property="og:description" content="${attr(d.description)}">
 <meta property="og:url" content="${url}">
-<meta property="og:image" content="${SITE}/images/og-cover.jpg">
+<meta property="og:image" content="${attr(ogImage)}">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -139,6 +140,12 @@ ${crumbLd}
     <h1>${esc(d.title)}</h1>
     <p class="article__lede">${esc(d.lede)}</p>
   </header>
+${d.heroImage ? `
+  <figure class="article__hero">
+    <img src="${attr(d.heroImage)}" alt="${attr(d.heroAlt || d.title)}" width="1200" height="675" loading="eager">
+    ${d.heroCredit ? `<figcaption>Ảnh: <a href="${attr(d.heroCreditUrl || 'https://pexels.com')}" target="_blank" rel="noopener nofollow">${esc(d.heroCredit)}</a> / Pexels</figcaption>` : ''}
+  </figure>
+` : ''}
 
   <div class="prose">
 ${d.bodyHtml}
@@ -200,8 +207,11 @@ ${d.bodyHtml}
 
 /** Listing card HTML inserted into blog/index.html (newest first). */
 export function renderCard(d) {
+  const thumb = d.heroImage
+    ? `        <a href="${esc(d.slug)}/" class="post-card__thumb"><img src="${attr(d.heroImage)}" alt="${attr(d.heroAlt || d.title)}" loading="lazy"></a>\n`
+    : '';
   return `      <article class="post-card">
-        <p class="post-card__meta">${esc(d.category || 'Cẩm nang')} · ${esc(d.dateDisplay)}</p>
+${thumb}        <p class="post-card__meta">${esc(d.category || 'Cẩm nang')} · ${esc(d.dateDisplay)}</p>
         <h2><a href="${esc(d.slug)}/">${esc(d.title)}</a></h2>
         <p>${esc(d.excerpt || d.lede)}</p>
         <span class="post-card__more">Đọc tiếp →</span>

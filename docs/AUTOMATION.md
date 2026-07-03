@@ -55,7 +55,8 @@ traffic tự nhiên, nhưng chủ shop chỉ tốn ~30 giây/ngày để duyệt
 **A. Mỗi sáng 08:00 (giờ VN):**
 1. GitHub Actions (`generate-article.yml`, cron `0 1 * * *` UTC) chạy.
 2. `generate-article.mjs` lấy topic `status:"todo"` đầu tiên trong `topics.json`.
-3. Gọi Claude API → nhận JSON (title, description, lede, bodyHtml, …).
+3. Gọi Claude API (tool use) → nhận title, description, lede, bodyHtml, imageQuery…
+   rồi lấy 1 ảnh bìa liên quan từ Pexels theo `imageQuery` (nếu có `PEXELS_API_KEY`).
 4. Lưu `automation/pending/<slug>.json`, đổi topic sang `status:"pending"`, commit & push.
 5. Gửi Telegram tin nhắn preview + 2 nút: **✅ Duyệt & đăng** / **❌ Bỏ qua**
    (`callback_data = publish:<slug>` hoặc `discard:<slug>`).
@@ -138,6 +139,8 @@ Repo → Settings → Secrets and variables → Actions → **New repository sec
 - `ANTHROPIC_API_KEY` = API key từ console.anthropic.com
 - `MEGIAY_BOT` = bot token ở bước 1
 - `TELEGRAM_CHAT_MEGIAY_ID` = chat id ở bước 1
+- `PEXELS_API_KEY` = (tuỳ chọn) API key free từ pexels.com/api để tự lấy ảnh bìa.
+  Không đặt cũng được — bài vẫn đăng nhưng không có ảnh.
 - (tuỳ chọn) Variables → `ANTHROPIC_MODEL` = `claude-sonnet-5` (mặc định) hoặc `claude-opus-4-8`
 
 Bật GitHub Pages: Settings → Pages → Deploy from branch `main` (thư mục `/root`).

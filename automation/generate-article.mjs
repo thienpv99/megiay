@@ -68,8 +68,10 @@ Yêu cầu:
         excerpt: { type: 'string', description: 'Tóm tắt ~20 từ cho thẻ card' },
         readMinutes: { type: 'integer', description: 'Số phút đọc ước lượng' },
         bodyHtml: { type: 'string', description: 'Toàn bộ thân bài dưới dạng HTML' },
+        imageQuery: { type: 'string', description: 'Từ khoá TIẾNG ANH ngắn (2-4 từ) để tìm ảnh bìa liên quan trên kho ảnh, vd "cleaning white sneakers" hoặc "leather shoe care"' },
+        heroAlt: { type: 'string', description: 'Mô tả ảnh bìa bằng tiếng Việt (alt text cho SEO)' },
       },
-      required: ['title', 'description', 'keywords', 'lede', 'excerpt', 'readMinutes', 'bodyHtml'],
+      required: ['title', 'description', 'keywords', 'lede', 'excerpt', 'readMinutes', 'bodyHtml', 'imageQuery', 'heroAlt'],
     },
   };
 
@@ -97,6 +99,27 @@ Yêu cầu:
   return block.input;
 }
 
+// Lấy 1 ảnh bìa liên quan từ Pexels (miễn phí). Trả null nếu không có key/không tìm thấy
+// → bài vẫn đăng được, chỉ là không có ảnh.
+async function fetchHeroImage(query) {
+  const key = process.env.PEXELS_API_KEY;
+  if (!key) { console.log('PEXELS_API_KEY chưa đặt — bỏ qua ảnh.'); return null; }
+  try {
+    const url = `https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&orientation=landscape&per_page=1`;
+    const res = await fetch(url, { headers: { Authorization: key } });
+    if (!res.ok) { console.log(`Pexels ${res.status} — bỏ qua ảnh.`); return null; }
+    const data = await res.json();
+    const p = data.photos && data.photos[0];
+    if (!p) { console.log('Pexels không có ảnh cho query — bỏ qua.'); return null; }
+    return {
+      heroImage: p.src.large2x || p.src.large,
+      heroCredit: p.photographer,
+      heroCreditUrl: p.url,
+      pexelsAlt: p.alt,
+    };
+  } catch (e) { console.log('Lỗi Pexels — bỏ qua ảnh:', e.message); return null; }
+}
+
 async function sendTelegram(draft) {
   const token = requireEnv('TELEGRAM_BOT_TOKEN');
   const chatId = requireEnv('TELEGRAM_CHAT_ID');
@@ -108,23 +131,35 @@ async function sendTelegram(draft) {
     `⏱ ${draft.readMinutes} phút đọc · 📂 ${draft.category}\n\n` +
     `Duyệt để đăng lên megiay.vn/blog/${draft.slug}/`;
 
-  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: preview,
-      parse_mode: 'HTML',
-      disable_web_page_preview: true,
-      reply_markup: {
-        inline_keyboard: [[
-          { text: '✅ Duyệt & đăng', callback_data: `publish:${draft.slug}` },
-          { text: '❌ Bỏ qua', callback_data: `discard:${draft.slug}` },
-        ]],
-      },
-    }),
-  });
-  if (!res.ok) throw new Error(`Telegram sendMessage ${res.status}: ${await res.text()}`);
+  const buttons = {
+    inline_keyboard: [[
+      { text: '✅ Duyệt & đăng', callback_data: `publish:${draft.slug}` },
+      { text: '❌ Bỏ qua', callback_data: `discard:${draft.slug}` },
+    ]],
+  };
+
+  // Có ảnh → gửi kèm ảnh (sendPhoto); không có → gửi tin thường.
+  let res;
+  if (draft.heroImage) {
+    res = await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, photo: draft.heroImage, caption: preview, parse_mode: 'HTML', reply_markup: buttons }),
+    });
+    // Nếu Telegram không tải được ảnh, lùi về gửi tin thường để không mất bản nháp.
+    if (!res.ok) {
+      console.log(`sendPhoto lỗi (${res.status}) — gửi lại dạng tin thường.`);
+      res = null;
+    }
+  }
+  if (!res) {
+    res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text: preview, parse_mode: 'HTML', disable_web_page_preview: true, reply_markup: buttons }),
+    });
+  }
+  if (!res.ok) throw new Error(`Telegram ${res.status}: ${await res.text()}`);
 }
 
 async function main() {
@@ -137,6 +172,7 @@ async function main() {
   console.log(`Generating: ${topic.title}`);
 
   const gen = await callClaude(topic);
+  const hero = await fetchHeroImage(gen.imageQuery || topic.title);
   const { iso, display } = todayDisplay();
   const draft = {
     slug: topic.slug,
@@ -150,6 +186,10 @@ async function main() {
     lede: gen.lede || '',
     excerpt: gen.excerpt || gen.lede || '',
     bodyHtml: gen.bodyHtml || '',
+    heroImage: hero ? hero.heroImage : '',
+    heroAlt: gen.heroAlt || (hero ? hero.pexelsAlt : '') || gen.title || topic.title,
+    heroCredit: hero ? hero.heroCredit : '',
+    heroCreditUrl: hero ? hero.heroCreditUrl : '',
     generatedAt: new Date().toISOString(),
   };
 
