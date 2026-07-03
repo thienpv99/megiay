@@ -87,7 +87,7 @@ async function main() {
   await rm(pendingPath, { force: true });
   await markTopic(SLUG, 'done');
 
-  await telegram(`✅ Đã đăng: <b>${draft.title}</b>\nhttps://megiay.vn/blog/${SLUG}/`);
+  await telegram(`✅ Đã đăng: <b>${draft.title}</b>\nhttps://megiay.vercel.app/blog/${SLUG}/`);
   console.log(`Published ${SLUG}`);
 }
 

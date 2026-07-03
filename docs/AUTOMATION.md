@@ -1,7 +1,7 @@
 # Luồng tự động: Sinh bài SEO → Duyệt qua Telegram → Đăng lên web
 
 > Tài liệu Solution Architecture (arc42-lite) cho tính năng "mỗi sáng 8h có 1 bài
-> nháp gửi Telegram, bấm 1 nút là bài SEO được đăng lên megiay.vn/blog".
+> nháp gửi Telegram, bấm 1 nút là bài SEO được đăng lên megiay.vercel.app/blog".
 
 ## 1. Mục tiêu & phạm vi
 
@@ -47,7 +47,7 @@ traffic tự nhiên, nhưng chủ shop chỉ tốn ~30 giây/ngày để duyệt
                                           │  sitemap → commit → push  │
                                           └─────────────┬─────────────┘
                                                         ▼
-                                              GitHub Pages (megiay.vn/blog)
+                                              GitHub Pages (megiay.vercel.app/blog)
 ```
 
 ## 4. Runtime — luồng chạy
@@ -72,7 +72,7 @@ traffic tự nhiên, nhưng chủ shop chỉ tốn ~30 giây/ngày để duyệt
     - **publish:** render `blog/<slug>/index.html`, chèn card vào `blog/index.html`,
       chèn URL vào `sitemap.xml`, đổi topic `done`, xoá file pending.
     - **discard:** xoá file pending, đổi topic `skipped`.
-11. Commit & push → GitHub Pages build lại → bài live tại `megiay.vn/blog/<slug>/`.
+11. Commit & push → GitHub Pages build lại → bài live tại `megiay.vercel.app/blog/<slug>/`.
 12. Gửi Telegram xác nhận kèm link bài.
 
 ## 5. Building blocks
@@ -174,7 +174,7 @@ curl "https://api.telegram.org/bot<BOT_TOKEN>/setWebhook" \
 ### Bước 6 — Chạy thử
 - Repo → Actions → **Generate SEO draft** → *Run workflow* (chạy tay, không cần đợi 8h).
 - Kiểm tra Telegram nhận được bản nháp → bấm **✅ Duyệt & đăng**.
-- Xem tab Actions chạy **Publish/Discard** → sau ~1 phút bài xuất hiện ở `megiay.vn/blog/`.
+- Xem tab Actions chạy **Publish/Discard** → sau ~1 phút bài xuất hiện ở `megiay.vercel.app/blog/`.
 
 Xong. Từ hôm sau, cứ 8h sáng bạn sẽ nhận 1 bản nháp và chỉ cần bấm duyệt.
 

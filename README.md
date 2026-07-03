@@ -36,7 +36,7 @@ Lưu ý: mở thẳng `index.html` bằng `file://` sẽ KHÔNG load được CS
   Facebook (fb.com/Megiay.shop94), Messenger, Zalo, giờ mở cửa
 
 ## Trước khi lên production
-- Domain placeholder hiện là megiay.vn — nếu domain thật khác, sửa trong index.html, robots.txt, sitemap.xml
+- Domain placeholder hiện là megiay.vercel.app — nếu domain thật khác, sửa trong index.html, robots.txt, sitemap.xml
 - Nếu có Zalo OA chính thức, đổi `zalo.me/0775996797` thành zalo.me/<OA-ID>
 - Nối form đặt lịch vào backend/CRM thật
 - Thay ảnh giày thật vào khối before/after (hiện đang là placeholder CSS)

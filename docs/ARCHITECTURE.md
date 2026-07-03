@@ -47,7 +47,7 @@ link m.me không cần SDK, không chậm trang, không vấn đề cookie/conse
 
 **ADR-3: Thống nhất brand "Megiay" toàn site.**
 Trạng thái: ĐÃ xử lý (2026-06-10) — đổi toàn bộ "SneakerCare" → "Megiay" và domain
-placeholder sneakercare.vn → megiay.vn trong title, meta, OG, JSON-LD, footer,
+placeholder sneakercare.vn → megiay.vercel.app trong title, meta, OG, JSON-LD, footer,
 robots.txt, sitemap.xml.
 
 ## Roadmap phát triển

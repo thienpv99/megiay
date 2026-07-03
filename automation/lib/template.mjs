@@ -30,7 +30,7 @@ export function slugify(str) {
     .slice(0, 80);
 }
 
-const SITE = 'https://megiay.vn';
+const SITE = 'https://megiay.vercel.app';
 
 /**
  * Full article page HTML. `data` fields:

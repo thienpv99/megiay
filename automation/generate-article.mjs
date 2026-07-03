@@ -129,7 +129,7 @@ async function sendTelegram(draft) {
     `${draft.lede}\n\n` +
     `🔑 <i>${draft.keywords}</i>\n` +
     `⏱ ${draft.readMinutes} phút đọc · 📂 ${draft.category}\n\n` +
-    `Duyệt để đăng lên megiay.vn/blog/${draft.slug}/`;
+    `Duyệt để đăng lên megiay.vercel.app/blog/${draft.slug}/`;
 
   const buttons = {
     inline_keyboard: [[
