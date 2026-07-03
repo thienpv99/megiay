@@ -1,0 +1,44 @@
+name: Publish/Discard SEO article
+
+# Được kích hoạt bởi Cloudflare Worker (webhook Telegram) qua GitHub API
+# repository_dispatch khi bạn bấm nút Duyệt / Bỏ qua trên Telegram.
+on:
+  repository_dispatch:
+    types: [publish-article, discard-article]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: seo-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Publish or discard draft
+        env:
+          ACTION: ${{ github.event.action == 'discard-article' && 'discard' || 'publish' }}
+          SLUG: ${{ github.event.client_payload.slug }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node automation/publish-article.mjs
+
+      - name: Commit result
+        run: |
+          git config user.name  "megiay-bot"
+          git config user.email "bot@megiay.vn"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "content(seo): ${{ github.event.action }} — ${{ github.event.client_payload.slug }}"
+            git push
+          else
+            echo "Nothing to commit."
+          fi

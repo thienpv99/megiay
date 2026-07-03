@@ -1,0 +1,45 @@
+{
+  "_note": "Hàng đợi chủ đề cho bài SEO. Mỗi ngày 8h sáng, script lấy topic đầu tiên có status 'todo'. Bạn có thể thêm topic mới vào cuối mảng bất cứ lúc nào.",
+  "topics": [
+    {
+      "slug": "cach-khu-mui-giay-hoi-tai-nha",
+      "title": "Cách khử mùi giày hôi tại nhà nhanh và triệt để",
+      "category": "Khử mùi",
+      "keywords": "cách khử mùi giày, giày bị hôi, khử mùi giày thể thao, khử mùi giày tại nhà",
+      "angle": "Nguyên nhân giày hôi, các cách khử mùi bằng nguyên liệu sẵn có (baking soda, trà, phấn rôm), khi nào cần khử khuẩn chuyên nghiệp.",
+      "status": "todo"
+    },
+    {
+      "slug": "cach-ve-sinh-giay-da-that-dung-cach",
+      "title": "Cách vệ sinh giày da thật đúng cách, không nứt không bạc màu",
+      "category": "Giày da",
+      "keywords": "vệ sinh giày da, làm sạch giày da thật, dưỡng da giày, bảo quản giày da",
+      "angle": "Đặc điểm da thật, quy trình làm sạch nhẹ nhàng, dưỡng da, cất giữ đúng cách, lỗi thường gặp làm hỏng da.",
+      "status": "todo"
+    },
+    {
+      "slug": "cach-lam-trang-de-giay-o-vang",
+      "title": "Cách làm trắng đế giày bị ố vàng hiệu quả",
+      "category": "Làm trắng",
+      "keywords": "làm trắng đế giày, đế giày ố vàng, tẩy trắng đế cao su, xử lý oxy hóa đế giày",
+      "angle": "Vì sao đế ngả vàng (oxy hóa), các cách xử lý tại nhà bằng baking soda/kem đánh răng, giới hạn của cách tại nhà và giải pháp chuyên nghiệp.",
+      "status": "todo"
+    },
+    {
+      "slug": "cach-bao-quan-giay-sneaker-ben-dep",
+      "title": "Cách bảo quản giày sneaker luôn bền và đẹp như mới",
+      "category": "Bảo quản",
+      "keywords": "bảo quản giày sneaker, cất giữ giày, chống ẩm mốc giày, giữ form giày",
+      "angle": "Chống ẩm mốc, giữ form, xoay vòng giày, hộp và túi hút ẩm, phủ nano chống thấm.",
+      "status": "todo"
+    },
+    {
+      "slug": "cach-ve-sinh-giay-da-lon-suede",
+      "title": "Cách vệ sinh giày da lộn (suede) mà không làm hỏng bề mặt",
+      "category": "Suede",
+      "keywords": "vệ sinh giày da lộn, làm sạch suede, bàn chải suede, bảo quản giày da lộn",
+      "angle": "Vì sao suede khó làm sạch, dụng cụ chuyên dụng (bàn chải crepe, gôm suede), xử lý vết nước và vết bẩn, vì sao nên hạn chế nước.",
+      "status": "todo"
+    }
+  ]
+}

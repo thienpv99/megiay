@@ -7,22 +7,33 @@ trên GitHub Pages, không có gì để bảo trì ngoài nội dung.
 
 ```
 megiay/
-├── index.html            # 1 page duy nhất — markup + SEO + JSON-LD
+├── index.html            # trang chủ — markup + SEO + JSON-LD
+├── blog/
+│   ├── index.html        # trang listing blog (marker POSTS:START/END để chèn card)
+│   └── <slug>/index.html # mỗi bài viết 1 thư mục (URL đẹp cho SEO)
 ├── favicon-*.png         # favicon ở root (chuẩn trình duyệt)
-├── robots.txt, sitemap.xml
+├── robots.txt, sitemap.xml  # sitemap có marker SITEMAP:START/END
 ├── assets/
 │   ├── css/style.css     # toàn bộ style, CSS variables làm design token
 │   ├── js/main.js        # 3 module IIFE: slider, form, nav-shadow
 │   └── logo/             # logo SVG (Megiay brand kit)
-└── docs/ARCHITECTURE.md  # file này
+├── automation/           # luồng sinh + duyệt bài SEO qua Telegram (xem AUTOMATION.md)
+│   ├── topics.json, generate-article.mjs, publish-article.mjs
+│   ├── lib/template.mjs  # render page/card/sitemap khớp design site
+│   └── telegram-webhook/ # Cloudflare Worker nhận nút bấm Telegram
+├── .github/workflows/    # cron 8h sinh bài + xử lý duyệt (repository_dispatch)
+└── docs/                 # ARCHITECTURE.md (file này) + AUTOMATION.md
 ```
 
 ## Quy ước
 - **Design tokens**: mọi màu/shadow đặt trong `:root` của style.css — đổi theme chỉ sửa 1 chỗ.
 - **JS**: mỗi tính năng là 1 IIFE độc lập, tự thoát nếu thiếu DOM element (`if(!x) return`).
   Trang vẫn hoạt động đầy đủ khi JS lỗi/tắt (progressive enhancement).
-- **Liên hệ/thông tin doanh nghiệp** xuất hiện ở 3 nơi phải sửa đồng bộ:
-  JSON-LD (head), footer, cụm nút nổi (Zalo + Messenger). Tìm theo từ khóa `Megiay.shop94` / `0775`.
+- **Liên hệ/thông tin doanh nghiệp** xuất hiện ở nhiều nơi phải sửa đồng bộ:
+  JSON-LD (head), footer, cụm nút nổi (Zalo + Messenger) — trên `index.html`, `blog/index.html`
+  và `automation/lib/template.mjs` (footer của bài viết auto). Tìm theo `Megiay.shop94` / `0775`.
+- **2 chi nhánh:** CN1 568 Nguyễn Duy Trinh (có GPS), CN2 33 Đường 7, P. Bình Trưng, Thủ Đức.
+  Mỗi chi nhánh có 1 block JSON-LD LocalBusiness riêng trong `index.html`.
 
 ## Quyết định kiến trúc (ADR-lite)
 
@@ -43,8 +54,8 @@ robots.txt, sitemap.xml.
 
 | Giai đoạn | Nhu cầu | Nâng cấp đề xuất |
 |---|---|---|
-| Hiện tại | 1 landing page | Giữ nguyên static |
-| +Blog/nhiều trang | Bài viết SEO "cách vệ sinh giày…" | Chuyển sang SSG (Astro/Eleventy) — tái dùng được toàn bộ HTML/CSS hiện có |
+| Hiện tại | Landing + Blog | Giữ static; blog render qua template.mjs (không cần SSG) |
+| +Blog/nhiều trang | ĐÃ làm (2026-07): `/blog/` + luồng duyệt bài qua Telegram | Nếu >50 bài & cần tag/category → cân nhắc SSG (Astro/Eleventy) |
 | +Đặt lịch thật | Form gửi về backend | Bước 1: Formspree/Google Form endpoint (sửa 1 hàm trong main.js). Bước 2: backend riêng + Supabase/DB khi cần quản lý đơn |
 | +Đa chi nhánh | Nhiều địa chỉ | Tách data ra JSON, render JSON-LD nhiều LocalBusiness |
 

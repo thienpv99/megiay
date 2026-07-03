@@ -1,0 +1,44 @@
+name: Generate SEO draft (daily 08:00)
+
+on:
+  schedule:
+    # 01:00 UTC = 08:00 giờ Việt Nam (UTC+7)
+    - cron: '0 1 * * *'
+  workflow_dispatch: {}   # cho phép chạy tay để test
+
+permissions:
+  contents: write
+
+concurrency:
+  group: seo-draft
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate draft + notify Telegram
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node automation/generate-article.mjs
+
+      - name: Commit pending draft
+        run: |
+          git config user.name  "megiay-bot"
+          git config user.email "bot@megiay.vn"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add automation/pending automation/topics.json
+            git commit -m "chore(seo): new draft awaiting Telegram approval"
+            git push
+          else
+            echo "Nothing to commit (no new draft)."
+          fi
