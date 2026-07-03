@@ -133,10 +133,11 @@ nào miễn nhận được POST của Telegram và gọi được GitHub API.
    `https://api.telegram.org/bot<TOKEN>/getUpdates` → tìm `chat.id` (số của bạn) = **CHAT ID**.
 
 ### Bước 2 — GitHub Actions secrets
-Repo → Settings → Secrets and variables → Actions → **New repository secret**:
+Repo → Settings → Secrets and variables → Actions → **New repository secret**
+(tên secret hiện dùng trong repo này):
 - `ANTHROPIC_API_KEY` = API key từ console.anthropic.com
-- `TELEGRAM_BOT_TOKEN` = bot token ở bước 1
-- `TELEGRAM_CHAT_ID` = chat id ở bước 1
+- `MEGIAY_BOT` = bot token ở bước 1
+- `TELEGRAM_CHAT_MEGIAY_ID` = chat id ở bước 1
 - (tuỳ chọn) Variables → `ANTHROPIC_MODEL` = `claude-sonnet-5` (mặc định) hoặc `claude-opus-4-8`
 
 Bật GitHub Pages: Settings → Pages → Deploy from branch `main` (thư mục `/root`).

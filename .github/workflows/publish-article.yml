@@ -27,8 +27,8 @@ jobs:
         env:
           ACTION: ${{ github.event.action == 'discard-article' && 'discard' || 'publish' }}
           SLUG: ${{ github.event.client_payload.slug }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.MEGIAY_BOT }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_MEGIAY_ID }}
         run: node automation/publish-article.mjs
 
       - name: Commit result
