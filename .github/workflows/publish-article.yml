@@ -38,6 +38,7 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git add -A
             git commit -m "content(seo): ${{ github.event.action }} — ${{ github.event.client_payload.slug }}"
+            git pull --rebase origin main
             git push
           else
             echo "Nothing to commit."
