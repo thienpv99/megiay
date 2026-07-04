@@ -1,0 +1,12 @@
+# Local dev tooling (Claude Code preview server, editor config)
+.claude/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Node (in case tooling is added later)
+node_modules/
