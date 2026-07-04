@@ -3,6 +3,7 @@
   <url><loc>https://megiay.vercel.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://megiay.vercel.app/blog/</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
   <!-- SITEMAP:START -->
+  <url><loc>https://megiay.vercel.app/blog/cach-ve-sinh-giay-da-that-dung-cach/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://megiay.vercel.app/blog/cach-khu-mui-giay-hoi-tai-nha/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://megiay.vercel.app/blog/cach-ve-sinh-giay-sneaker-trang-tai-nha/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- SITEMAP:END -->
