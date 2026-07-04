@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "megiay",
+      "runtimeExecutable": "powershell",
+      "runtimeArgs": [
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-File", "C:\\Users\\admin\\Downloads\\megiay\\.claude\\static-server.ps1",
+        "C:\\Users\\admin\\Downloads\\megiay",
+        "8123"
+      ],
+      "port": 8123
+    }
+  ]
+}
