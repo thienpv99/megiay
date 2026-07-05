@@ -139,6 +139,10 @@ a{color:inherit;text-decoration:none}
 .book__copy h2{font-size:clamp(2rem,4vw,3.2rem)}
 .book__form{background:#fff;color:var(--ink);border-radius:24px;padding:34px;display:grid;gap:16px;box-shadow:var(--shadow)}
 .field{display:grid;gap:6px}
+.form__row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.estimate{background:var(--paper);border:1.5px dashed var(--foam);border-radius:12px;padding:12px 16px;text-align:center;font-family:"Space Mono",monospace;font-size:.88rem;color:var(--ink)}
+.estimate strong{color:var(--foam-deep);font-size:1.05rem}
+.estimate small{display:block;margin-top:2px;color:var(--ink-2);font-size:.76rem}
 .field label{font-family:"Space Mono",monospace;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
 .field input,.field select{padding:13px 15px;border:1.5px solid var(--line);border-radius:12px;font-size:1rem;font-family:inherit;background:var(--paper)}
 .field input:focus,.field select:focus{border-color:var(--foam);background:#fff}

@@ -183,7 +183,7 @@
         <div class="ba__handle" id="baHandle"><span></span></div>
         <input class="ba__range" id="baRange" type="range" min="0" max="100" value="50" aria-label="Kéo để so sánh trước và sau">
       </div>
-      <figcaption>Kéo thanh trượt — kết quả thật từ gói Deep Clean</figcaption>
+      <figcaption>Kéo thanh trượt để so sánh (minh hoạ) — xem ảnh thật tại Facebook Megiay</figcaption>
     </figure>
   </div>
   <div class="marquee" aria-hidden="true">
@@ -377,10 +377,30 @@
           <option>Tư vấn thêm</option>
         </select>
       </div>
+      <div class="form__row">
+        <div class="field">
+          <label for="pairs">Số đôi</label>
+          <input id="pairs" name="pairs" type="number" min="1" max="20" value="1" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="pickupDate">Ngày lấy giày</label>
+          <input id="pickupDate" name="pickupDate" type="date">
+        </div>
+      </div>
+      <div class="field">
+        <label for="slot">Khung giờ lấy</label>
+        <select id="slot" name="slot">
+          <option selected>Sớm nhất có thể</option>
+          <option>Sáng (8h–12h)</option>
+          <option>Chiều (12h–17h)</option>
+          <option>Tối (17h–21h)</option>
+        </select>
+      </div>
       <div class="field">
         <label for="addr">Địa chỉ lấy giày</label>
         <input id="addr" name="addr" type="text" autocomplete="street-address" placeholder="Số nhà, đường, quận">
       </div>
+      <p class="estimate" id="estimate" aria-live="polite"></p>
       <button class="btn btn--full" type="submit">Gửi yêu cầu lấy giày</button>
       <p class="book__note" id="formMsg" role="status"></p>
     </form>

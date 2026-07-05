@@ -12,6 +12,30 @@
   update(range.value);
 })();
 
+// Live price estimate (số đôi × gói)
+(function(){
+  const form = document.getElementById('bookForm');
+  const box  = document.getElementById('estimate');
+  if(!form || !box) return;
+  const PRICES = { 'Cơ bản': 70000, 'Deep Clean': 150000, 'Phục hồi': 320000 };
+  const vnd = n => n.toLocaleString('vi-VN') + 'đ';
+  function update(){
+    const service = form.service.value;
+    const pairs = Math.min(20, Math.max(1, parseInt(form.pairs.value, 10) || 1));
+    const key = Object.keys(PRICES).find(k => service.indexOf(k) === 0);
+    if(!key){ box.innerHTML = 'Chúng tôi sẽ tư vấn gói phù hợp và báo giá trước khi làm.'; return; }
+    const total = PRICES[key] * pairs;
+    const ship = pairs >= 2 ? 'Miễn phí giao nhận nội thành' : 'Miễn phí giao nhận từ 2 đôi';
+    box.innerHTML = 'Tạm tính: <strong>' + vnd(total) + '</strong> · ' + pairs + ' đôi<small>' + ship + ' — báo giá chính xác sau khi kiểm tra giày</small>';
+  }
+  form.service.addEventListener('change', update);
+  form.pairs.addEventListener('input', update);
+  // Ngày lấy: không cho chọn quá khứ
+  const d = form.pickupDate;
+  if(d){ d.min = new Date(Date.now() + 7*3600*1000).toISOString().slice(0,10); }
+  update();
+})();
+
 // Booking form → gửi lead về /api/contact (báo Telegram cho shop)
 (function(){
   const form = document.getElementById('bookForm');
@@ -33,11 +57,14 @@
     msg.style.color = '';
     msg.textContent = 'Đang gửi…';
     try {
+      const pairs = Math.min(20, Math.max(1, parseInt(fd.get('pairs'), 10) || 1));
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          name, phone, service,
+          name, phone, service, pairs,
+          pickupDate: (fd.get('pickupDate') || '').toString(),
+          slot: (fd.get('slot') || '').toString(),
           addr: (fd.get('addr') || '').toString().trim(),
           website: (fd.get('website') || '').toString()  // honeypot
         })
@@ -46,8 +73,13 @@
       if(res.ok && data.ok){
         msg.textContent = 'Đã nhận yêu cầu! Shipper sẽ gọi cho bạn trong ít phút.';
         msg.style.color = '';
-        if(typeof gtag === 'function') gtag('event', 'generate_lead', {service});
+        if(typeof gtag === 'function'){
+          const PRICES = { 'Cơ bản': 70000, 'Deep Clean': 150000, 'Phục hồi': 320000 };
+          const key = Object.keys(PRICES).find(k => service.indexOf(k) === 0);
+          gtag('event', 'generate_lead', {service, pairs, value: key ? PRICES[key] * pairs : 0, currency: 'VND'});
+        }
         form.reset();
+        form.service.dispatchEvent(new Event('change')); // cập nhật lại ô tạm tính
       } else {
         msg.textContent = data.error || 'Có lỗi khi gửi. Vui lòng gọi 0775 996 797 giúp mình nhé.';
         msg.style.color = '#c0392b';

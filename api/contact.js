@@ -20,6 +20,9 @@ export default async function handler(req, res) {
   const phone   = String(body.phone || '').trim();
   const service = String(body.service || '').trim();
   const addr    = String(body.addr || '').trim();
+  const pairs   = Math.min(20, Math.max(1, parseInt(body.pairs, 10) || 1));
+  const pickupDate = String(body.pickupDate || '').trim().slice(0, 10); // YYYY-MM-DD
+  const slot    = String(body.slot || '').trim().slice(0, 30);
   const honeypot = String(body.website || '').trim(); // bẫy bot
 
   // Bot thường điền cả field ẩn → im lặng chấp nhận, không làm gì.
@@ -41,11 +44,20 @@ export default async function handler(req, res) {
 
   const esc = (s) => String(s).replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
   const when = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+  // Tạm tính để shop nhìn nhanh giá trị lead
+  const PRICES = { 'Cơ bản': 70000, 'Deep Clean': 150000, 'Phục hồi': 320000 };
+  const priceKey = Object.keys(PRICES).find((k) => service.startsWith(k));
+  const estimate = priceKey ? (PRICES[priceKey] * pairs).toLocaleString('vi-VN') + 'đ' : null;
+
   const text =
     `🔔 <b>LEAD MỚI từ website Megiay</b>\n\n` +
     `👤 <b>Tên:</b> ${esc(name)}\n` +
     `📞 <b>SĐT:</b> ${esc(phone)}\n` +
-    (service ? `🧰 <b>Gói:</b> ${esc(service)}\n` : '') +
+    (service ? `🧰 <b>Gói:</b> ${esc(service)} × ${pairs} đôi\n` : `👟 <b>Số đôi:</b> ${pairs}\n`) +
+    (estimate ? `💰 <b>Tạm tính:</b> ${estimate}\n` : '') +
+    (pickupDate ? `📅 <b>Ngày lấy:</b> ${esc(pickupDate)}\n` : '') +
+    (slot ? `⏰ <b>Khung giờ:</b> ${esc(slot)}\n` : '') +
     (addr ? `📍 <b>Địa chỉ:</b> ${esc(addr)}\n` : '') +
     `\n🕒 ${when}`;
 
