@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   body = body || {};
 
   const name    = String(body.name || '').trim();
-  const phone   = String(body.phone || '').trim();
+  const phone   = normPhoneVN(body.phone || '');
   const service = String(body.service || '').trim();
   const addr    = String(body.addr || '').trim();
   const pairs   = Math.min(20, Math.max(1, parseInt(body.pairs, 10) || 1));
@@ -31,8 +31,8 @@ export default async function handler(req, res) {
   if (!name || !phone) {
     return res.status(400).json({ ok: false, error: 'Vui lòng nhập họ tên và số điện thoại.' });
   }
-  if (phone.replace(/[^0-9]/g, '').length < 8) {
-    return res.status(400).json({ ok: false, error: 'Số điện thoại không hợp lệ.' });
+  if (!isValidPhoneVN(phone)) {
+    return res.status(400).json({ ok: false, error: 'Số điện thoại chưa đúng. Vui lòng nhập số Việt Nam, VD: 090 123 4567.' });
   }
 
   const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -76,4 +76,20 @@ export default async function handler(req, res) {
     console.error(e);
     return res.status(500).json({ ok: false, error: 'Lỗi máy chủ, vui lòng gọi 0775 996 797.' });
   }
+}
+
+// ---- Validation số điện thoại VN (giữ đồng bộ với assets/js/main.js) ----
+function normPhoneVN(raw) {
+  let p = String(raw).replace(/[\s.\-()]/g, '');
+  if (p.startsWith('+84')) p = '0' + p.slice(3);
+  else if (p.startsWith('84') && p.length >= 10) p = '0' + p.slice(2);
+  return p;
+}
+function isValidPhoneVN(p) {
+  // Di động: 0 + (3|5|7|8|9) + 8 số (đủ mọi nhà mạng, kể cả iTel 087/Wintel 055).
+  // Bàn: 02 + 9 số.
+  if (!/^0(?:2\d{9}|[35789]\d{8})$/.test(p)) return false;
+  if (/^(\d)\1+$/.test(p)) return false;   // toàn một chữ số (0000000000…)
+  if (/(\d)\1{7}$/.test(p)) return false;  // 8 số cuối giống hệt nhau (0911111111…)
+  return true;
 }

@@ -36,19 +36,47 @@
   update();
 })();
 
+// Chuẩn hoá & kiểm tra số điện thoại Việt Nam
+function normPhoneVN(raw){
+  let p = String(raw).replace(/[\s.\-()]/g, '');
+  if(p.startsWith('+84')) p = '0' + p.slice(3);
+  else if(p.startsWith('84') && p.length >= 10) p = '0' + p.slice(2);
+  return p;
+}
+function isValidPhoneVN(p){
+  // Di động: 0 + (3|5|7|8|9) + 8 số. Bàn: 02 + 9 số.
+  if(!/^0(?:2\d{9}|[35789]\d{8})$/.test(p)) return false;
+  if(/^(\d)\1+$/.test(p)) return false;      // toàn một chữ số
+  if(/(\d)\1{7}$/.test(p)) return false;     // 8 số cuối giống hệt nhau
+  return true;
+}
+
 // Booking form → gửi lead về /api/contact (báo Telegram cho shop)
 (function(){
   const form = document.getElementById('bookForm');
   const msg  = document.getElementById('formMsg');
   if(!form) return;
+  // Gõ lại thì xoá trạng thái lỗi
+  form.phone.addEventListener('input', () => {
+    form.phone.classList.remove('field--error');
+    if(msg.dataset.phoneError){ msg.textContent = ''; delete msg.dataset.phoneError; }
+  });
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const fd = new FormData(form);
     const name  = (fd.get('name')  || '').toString().trim();
-    const phone = (fd.get('phone') || '').toString().trim();
+    const phone = normPhoneVN(fd.get('phone') || '');
     if(!name || !phone){
       msg.textContent = 'Vui lòng nhập họ tên và số điện thoại.';
       msg.style.color = '#c0392b';
+      return;
+    }
+    if(!isValidPhoneVN(phone)){
+      msg.textContent = 'Số điện thoại chưa đúng. Vui lòng nhập số Việt Nam, VD: 090 123 4567 hoặc +84 90 123 4567.';
+      msg.style.color = '#c0392b';
+      msg.dataset.phoneError = '1';
+      form.phone.classList.add('field--error');
+      form.phone.focus();
       return;
     }
     const service = (fd.get('service') || '').toString();
