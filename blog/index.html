@@ -33,7 +33,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/css/style.css">
 
 <!-- Structured Data: Blog -->
@@ -57,7 +57,7 @@
     <a href="../" class="brand" aria-label="Megiay trang chủ">
       <img src="../assets/logo/megiay-horizontal-transparent.svg" alt="Megiay" class="brand__logo">
     </a>
-    <nav class="nav__links" aria-label="Điều hướng chính">
+    <nav class="nav__links" id="navLinks" aria-label="Điều hướng chính">
       <a href="../#services">Dịch vụ</a>
       <a href="../#process">Quy trình</a>
       <a href="../#pricing">Bảng giá</a>
@@ -65,6 +65,7 @@
       <a href="../#faq">Hỏi đáp</a>
     </nav>
     <a href="../#book" class="btn btn--sm">Đặt lịch ngay</a>
+    <button class="nav__burger" id="navBurger" aria-label="Mở menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -154,5 +155,6 @@
   </a>
 </div>
 
+<script src="../assets/js/main.js"></script>
 </body>
 </html>

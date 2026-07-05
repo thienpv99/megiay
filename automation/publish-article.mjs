@@ -11,7 +11,7 @@
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { renderArticlePage, renderCard, renderSitemapEntry } from './lib/template.mjs';
+import { renderArticlePage, renderCard, renderSitemapEntry, renderRelated } from './lib/template.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
@@ -74,9 +74,16 @@ async function main() {
   // publish
   const dir = join(ROOT, 'blog', SLUG);
   await mkdir(dir, { recursive: true });
-  await writeFile(join(dir, 'index.html'), renderArticlePage(draft));
 
+  // Bài liên quan: lấy 3 bài mới nhất từ listing (trừ chính nó) — listing là source of truth.
   let index = await readFile(BLOG_INDEX, 'utf8');
+  const related = [...index.matchAll(/<h2><a href="([^"/]+)\/">([^<]+)<\/a><\/h2>/g)]
+    .map((m) => ({ slug: m[1], title: m[2] }))
+    .filter((it) => it.slug !== SLUG)
+    .slice(0, 3);
+  draft.relatedHtml = renderRelated(related);
+
+  await writeFile(join(dir, 'index.html'), renderArticlePage(draft));
   index = insertBetween(index, '<!-- POSTS:START -->', '<!-- POSTS:END -->', renderCard(draft), { prepend: true });
   await writeFile(BLOG_INDEX, index);
 

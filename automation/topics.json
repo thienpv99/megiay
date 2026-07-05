@@ -40,6 +40,62 @@
       "keywords": "vệ sinh giày da lộn, làm sạch suede, bàn chải suede, bảo quản giày da lộn",
       "angle": "Vì sao suede khó làm sạch, dụng cụ chuyên dụng (bàn chải crepe, gôm suede), xử lý vết nước và vết bẩn, vì sao nên hạn chế nước.",
       "status": "todo"
+    },
+    {
+      "slug": "ve-sinh-giay-thu-duc-o-dau-uy-tin",
+      "title": "Vệ sinh giày ở Thủ Đức: chọn tiệm uy tín và quy trình chuẩn",
+      "category": "Địa điểm",
+      "keywords": "vệ sinh giày thủ đức, giặt giày thủ đức, tiệm vệ sinh giày gần đây, vệ sinh giày quận 2",
+      "angle": "Tiêu chí chọn tiệm vệ sinh giày uy tín khu Thủ Đức/Bình Trưng (quy trình, hoá chất, bảo hành), giới thiệu 2 chi nhánh Megiay 568 Nguyễn Duy Trinh và 33 Đường 7, dịch vụ lấy giày tận nơi.",
+      "status": "todo"
+    },
+    {
+      "slug": "so-sanh-3-goi-ve-sinh-giay-megiay",
+      "title": "Nên chọn gói nào: Cơ bản, Deep Clean hay Phục hồi?",
+      "category": "Dịch vụ",
+      "keywords": "giá vệ sinh giày, bảng giá giặt giày, deep clean giày là gì, phục hồi giày giá bao nhiêu",
+      "angle": "So sánh chi tiết 3 gói 70k/150k/320k theo tình trạng giày, chất liệu và nhu cầu; ai nên chọn gói nào; freeship từ 2 đôi; cam kết hoàn tiền.",
+      "status": "todo"
+    },
+    {
+      "slug": "cach-ve-sinh-giay-canvas-converse-vans",
+      "title": "Cách vệ sinh giày canvas (Converse, Vans) đúng chuẩn",
+      "category": "Canvas",
+      "keywords": "vệ sinh giày canvas, giặt giày converse, làm sạch giày vans, giày vải bị ố",
+      "angle": "Đặc thù vải canvas dễ ố loang, các bước giặt tay đúng, xử lý viền cao su, lỗi giặt máy làm hỏng form, khi nào cần deep clean.",
+      "status": "todo"
+    },
+    {
+      "slug": "phu-nano-chong-tham-giay-la-gi",
+      "title": "Phủ nano chống thấm giày là gì và có đáng tiền không?",
+      "category": "Bảo dưỡng",
+      "keywords": "phủ nano giày, chống thấm giày, xịt chống thấm sneaker, bảo vệ giày mùa mưa",
+      "angle": "Cơ chế lớp phủ nano, hiệu quả thực tế mùa mưa Sài Gòn, khác gì xịt chống thấm tự mua, độ bền lớp phủ, khi nào nên phủ lại.",
+      "status": "todo"
+    },
+    {
+      "slug": "khu-mui-giay-da-bong-the-thao",
+      "title": "Khử mùi giày đá bóng và giày thể thao tập gym triệt để",
+      "category": "Khử mùi",
+      "keywords": "khử mùi giày đá bóng, giày thể thao bị hôi, khử khuẩn giày gym, giày ra mồ hôi",
+      "angle": "Vì sao giày thể thao hôi nhanh (mồ hôi + vi khuẩn), thói quen sau tập để giảm mùi, xử lý tại nhà, công nghệ khử khuẩn chuyên nghiệp của tiệm.",
+      "status": "todo"
+    },
+    {
+      "slug": "ve-sinh-giay-tai-nha-hay-ra-tiem",
+      "title": "Tự vệ sinh giày tại nhà hay mang ra tiệm: khi nào chọn gì?",
+      "category": "Cẩm nang",
+      "keywords": "tự giặt giày tại nhà, vệ sinh giày chuyên nghiệp, có nên giặt giày bằng máy, chi phí vệ sinh giày",
+      "angle": "Bảng quyết định theo tình trạng giày và chất liệu: khi nào tự làm được (kèm link các bài hướng dẫn), khi nào tự làm sẽ hỏng giày, so sánh chi phí - rủi ro - thời gian.",
+      "status": "todo"
+    },
+    {
+      "slug": "cach-lam-sach-day-giay-va-lot-giay",
+      "title": "Cách làm sạch dây giày và lót giày đúng cách, hết ố hết mùi",
+      "category": "Cẩm nang",
+      "keywords": "giặt dây giày, làm sạch lót giày, lót giày bị hôi, dây giày trắng bị ố",
+      "angle": "Hai bộ phận bẩn nhất nhưng hay bị bỏ quên; cách giặt dây trắng không ố, vệ sinh lót giày khử mùi, khi nào nên thay mới thay vì giặt.",
+      "status": "todo"
     }
   ]
 }

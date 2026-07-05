@@ -39,7 +39,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 
 <!-- Structured Data: LocalBusiness -->
@@ -125,7 +125,9 @@
   "mainEntity": [
     { "@type": "Question", "name": "Vệ sinh một đôi giày mất bao lâu?", "acceptedAnswer": { "@type": "Answer", "text": "Gói cơ bản hoàn thành trong 24 giờ. Làm sạch sâu và phục hồi cần 48–72 giờ tùy tình trạng giày." } },
     { "@type": "Question", "name": "Có nhận giao tận nơi không?", "acceptedAnswer": { "@type": "Answer", "text": "Có. Chúng tôi nhận và giao tận nơi trong nội thành TP.HCM, miễn phí cho đơn từ 2 đôi." } },
-    { "@type": "Question", "name": "Giày da và giày vải có làm được không?", "acceptedAnswer": { "@type": "Answer", "text": "Được. Mỗi chất liệu có quy trình và dung dịch riêng: da, lộn, vải canvas, suede, knit." } }
+    { "@type": "Question", "name": "Giày da và giày vải có làm được không?", "acceptedAnswer": { "@type": "Answer", "text": "Được. Mỗi chất liệu có quy trình và dung dịch riêng: da, lộn, vải canvas, suede, knit." } },
+    { "@type": "Question", "name": "Giá dịch vụ tính như thế nào?", "acceptedAnswer": { "@type": "Answer", "text": "Giá tính trên mỗi đôi: Cơ bản 70.000đ, Deep Clean 150.000đ, Phục hồi 320.000đ. Giao nhận miễn phí cho đơn từ 2 đôi trong nội thành TP.HCM, không phí ẩn." } },
+    { "@type": "Question", "name": "Nếu giày không sạch như cam kết thì sao?", "acceptedAnswer": { "@type": "Answer", "text": "Chúng tôi cam kết sạch như mới hoặc hoàn tiền 100%. Gói Phục hồi còn được bảo hành kết quả 30 ngày." } }
   ]
 }
 </script>
@@ -139,7 +141,7 @@
     <a href="#top" class="brand" aria-label="Megiay trang chủ">
       <img src="assets/logo/megiay-horizontal-transparent.svg" alt="Megiay" class="brand__logo">
     </a>
-    <nav class="nav__links" aria-label="Điều hướng chính">
+    <nav class="nav__links" id="navLinks" aria-label="Điều hướng chính">
       <a href="#services">Dịch vụ</a>
       <a href="#process">Quy trình</a>
       <a href="#pricing">Bảng giá</a>
@@ -148,6 +150,9 @@
       <a href="#faq">Hỏi đáp</a>
     </nav>
     <a href="#book" class="btn btn--sm">Đặt lịch ngay</a>
+    <button class="nav__burger" id="navBurger" aria-label="Mở menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
@@ -313,6 +318,38 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="block" id="faq">
+  <div class="wrap">
+    <header class="block__head">
+      <p class="eyebrow">Hỏi đáp</p>
+      <h2>Câu hỏi thường gặp</h2>
+    </header>
+    <div class="faq">
+      <details class="faq__item">
+        <summary>Vệ sinh một đôi giày mất bao lâu?</summary>
+        <p>Gói cơ bản hoàn thành trong 24 giờ. Làm sạch sâu và phục hồi cần 48–72 giờ tùy tình trạng giày.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Có nhận giao tận nơi không?</summary>
+        <p>Có. Chúng tôi nhận và giao tận nơi trong nội thành TP.HCM, miễn phí cho đơn từ 2 đôi.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Giày da và giày vải có làm được không?</summary>
+        <p>Được. Mỗi chất liệu có quy trình và dung dịch riêng: da, lộn, vải canvas, suede, knit.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Giá dịch vụ tính như thế nào?</summary>
+        <p>Giá tính trên mỗi đôi: Cơ bản 70.000đ, Deep Clean 150.000đ, Phục hồi 320.000đ. Giao nhận miễn phí cho đơn từ 2 đôi trong nội thành TP.HCM, không phí ẩn.</p>
+      </details>
+      <details class="faq__item">
+        <summary>Nếu giày không sạch như cam kết thì sao?</summary>
+        <p>Chúng tôi cam kết sạch như mới hoặc hoàn tiền 100%. Gói Phục hồi còn được bảo hành kết quả 30 ngày.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
 <!-- BOOK / CTA -->
 <section class="block book" id="book">
   <div class="wrap book__inner">
@@ -392,6 +429,12 @@
       <path d="M12 2C6.36 2 2 6.13 2 11.7c0 2.91 1.19 5.44 3.14 7.17.16.15.26.35.27.57l.05 1.78c.02.57.6.94 1.12.71l1.98-.87c.17-.08.36-.09.53-.04.91.25 1.88.38 2.91.38 5.64 0 10-4.13 10-9.7S17.64 2 12 2zm6 7.46-2.94 4.66c-.47.74-1.47.93-2.17.4l-2.34-1.75a.6.6 0 0 0-.72 0l-3.16 2.4c-.42.32-.97-.18-.69-.63l2.94-4.66c.47-.74 1.47-.93 2.17-.4l2.34 1.75c.21.16.51.16.72 0l3.16-2.4c.42-.32.97.18.69.63z"/>
     </svg>
   </a>
+</div>
+
+<!-- Sticky mobile CTA bar -->
+<div class="mobilebar" aria-label="Hành động nhanh">
+  <a href="tel:+84775996797" class="mobilebar__call">📞 Gọi ngay</a>
+  <a href="#book" class="mobilebar__book">Đặt lịch lấy giày</a>
 </div>
 
 <script src="assets/js/main.js"></script>

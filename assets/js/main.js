@@ -75,6 +75,25 @@
   });
 })();
 
+// Mobile hamburger menu
+(function(){
+  const burger = document.getElementById('navBurger');
+  const nav = document.querySelector('.nav');
+  if(!burger || !nav) return;
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('nav--open');
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Đóng menu' : 'Mở menu');
+  });
+  // Đóng menu khi bấm 1 link (anchor scroll)
+  nav.addEventListener('click', e => {
+    if(e.target.closest('.nav__links a')){
+      nav.classList.remove('nav--open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+  });
+})();
+
 // Header shadow on scroll
 (function(){
   const nav = document.querySelector('.nav');

@@ -96,7 +96,7 @@ export function renderArticlePage(d) {
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/css/style.css">
 
 <!-- Structured Data: Article -->
@@ -117,7 +117,7 @@ ${crumbLd}
     <a href="../../" class="brand" aria-label="Megiay trang chủ">
       <img src="../../assets/logo/megiay-horizontal-transparent.svg" alt="Megiay" class="brand__logo">
     </a>
-    <nav class="nav__links" aria-label="Điều hướng chính">
+    <nav class="nav__links" id="navLinks" aria-label="Điều hướng chính">
       <a href="../../#services">Dịch vụ</a>
       <a href="../../#process">Quy trình</a>
       <a href="../../#pricing">Bảng giá</a>
@@ -125,6 +125,7 @@ ${crumbLd}
       <a href="../../#faq">Hỏi đáp</a>
     </nav>
     <a href="../../#book" class="btn btn--sm">Đặt lịch ngay</a>
+    <button class="nav__burger" id="navBurger" aria-label="Mở menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -150,7 +151,7 @@ ${d.heroImage ? `
   <div class="prose">
 ${d.bodyHtml}
   </div>
-
+${d.relatedHtml || ''}
   <div class="article__cta">
     <h3>Giày cứng đầu? Để Megiay lo.</h3>
     <p>Nhận & giao tận nơi trong nội thành TP.HCM. Cam kết sạch như mới hoặc hoàn tiền.</p>
@@ -200,8 +201,23 @@ ${d.bodyHtml}
   </a>
 </div>
 
+<script src="../../assets/js/main.js"></script>
 </body>
 </html>
+`;
+}
+
+/** "Bài viết liên quan" section — items: [{slug, title}]. Empty string if none. */
+export function renderRelated(items) {
+  if (!items || !items.length) return '';
+  const lis = items.map((it) => `      <li><a href="../${esc(it.slug)}/">${esc(it.title)}</a></li>`).join('\n');
+  return `
+  <aside class="related">
+    <h3>Bài viết liên quan</h3>
+    <ul>
+${lis}
+    </ul>
+  </aside>
 `;
 }
 
