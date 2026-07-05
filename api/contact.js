@@ -1,0 +1,67 @@
+// Vercel Serverless Function — nhận form tư vấn và báo lead về Telegram.
+// Deploy tự động khi ở thư mục /api trên Vercel (không cần cấu hình).
+//
+// Cần đặt Environment Variables trong Vercel (Project Settings → Environment Variables):
+//   TELEGRAM_BOT_TOKEN  = token bot (giống bên GitHub/Cloudflare)
+//   TELEGRAM_CHAT_ID    = chat id cá nhân của bạn (vd 1606718182)
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST');
+    return res.status(405).json({ ok: false, error: 'Method not allowed' });
+  }
+
+  // Vercel tự parse JSON body; phòng trường hợp là chuỗi.
+  let body = req.body;
+  if (typeof body === 'string') { try { body = JSON.parse(body); } catch { body = {}; } }
+  body = body || {};
+
+  const name    = String(body.name || '').trim();
+  const phone   = String(body.phone || '').trim();
+  const service = String(body.service || '').trim();
+  const addr    = String(body.addr || '').trim();
+  const honeypot = String(body.website || '').trim(); // bẫy bot
+
+  // Bot thường điền cả field ẩn → im lặng chấp nhận, không làm gì.
+  if (honeypot) return res.status(200).json({ ok: true });
+
+  if (!name || !phone) {
+    return res.status(400).json({ ok: false, error: 'Vui lòng nhập họ tên và số điện thoại.' });
+  }
+  if (phone.replace(/[^0-9]/g, '').length < 8) {
+    return res.status(400).json({ ok: false, error: 'Số điện thoại không hợp lệ.' });
+  }
+
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) {
+    console.error('Missing TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID env');
+    return res.status(500).json({ ok: false, error: 'Hệ thống chưa cấu hình. Vui lòng gọi 0775 996 797.' });
+  }
+
+  const esc = (s) => String(s).replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
+  const when = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+  const text =
+    `🔔 <b>LEAD MỚI từ website Megiay</b>\n\n` +
+    `👤 <b>Tên:</b> ${esc(name)}\n` +
+    `📞 <b>SĐT:</b> ${esc(phone)}\n` +
+    (service ? `🧰 <b>Gói:</b> ${esc(service)}\n` : '') +
+    (addr ? `📍 <b>Địa chỉ:</b> ${esc(addr)}\n` : '') +
+    `\n🕒 ${when}`;
+
+  try {
+    const tg = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML', disable_web_page_preview: true }),
+    });
+    if (!tg.ok) {
+      console.error('Telegram error', await tg.text());
+      return res.status(502).json({ ok: false, error: 'Không gửi được thông báo, vui lòng gọi 0775 996 797.' });
+    }
+    return res.status(200).json({ ok: true });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ ok: false, error: 'Lỗi máy chủ, vui lòng gọi 0775 996 797.' });
+  }
+}
